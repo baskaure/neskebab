@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.css';
+import './../style/Header.css';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
               <span className="logo-letter">N</span>
             </div>
             <div>
-              <h1 className="site-title">Nes Kebab</h1>
+              <h1 className="site-title">Nes'Kebab</h1>
               <p className="site-location">Condrieu</p>
             </div>
           </div>

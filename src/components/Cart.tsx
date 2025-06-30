@@ -3,6 +3,8 @@ import { X, Plus, Minus, ShoppingBag, CreditCard } from 'lucide-react';
 import { CartItem, Customer } from '../types';
 import CheckoutModal from './CheckoutModal';
 
+import './../style/Cart.css'; // Import du CSS
+
 interface CartProps {
   isOpen: boolean;
   onClose: () => void;
@@ -27,7 +29,6 @@ const Cart: React.FC<CartProps> = ({
   const total = subtotal + tax;
 
   const handleCheckout = (customer: Customer) => {
-    // Here you would integrate with Stripe
     console.log('Order placed:', { cartItems, customer, total });
     alert('Commande passée avec succès! Vous recevrez un email de confirmation.');
     onClearCart();
@@ -39,72 +40,64 @@ const Cart: React.FC<CartProps> = ({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
-        <div className="bg-gray-900 w-full max-w-md h-full overflow-y-auto">
-          <div className="p-6 border-b border-gray-700 bg-gradient-to-r from-green-600 to-green-700">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white flex items-center">
-                <ShoppingBag className="w-6 h-6 mr-2" />
+      <div className="overlay">
+        <div className="cart-container">
+          <div className="cart-header">
+            <div className="cart-header-inner">
+              <h2 className="cart-title">
+                <ShoppingBag className="icon-small" />
                 Panier
               </h2>
-              <button
-                onClick={onClose}
-                className="text-white hover:text-gray-200 transition-colors"
-              >
-                <X className="w-6 h-6" />
+              <button onClick={onClose} className="close-btn">
+                <X className="icon-small" />
               </button>
             </div>
           </div>
 
-          <div className="flex-1 p-6">
+          <div className="cart-body">
             {cartItems.length === 0 ? (
-              <div className="text-center py-12">
-                <ShoppingBag className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 mb-4">Votre panier est vide</p>
-                <button
-                  onClick={onClose}
-                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-2 rounded-lg transition-all duration-300"
-                >
+              <div className="empty-cart">
+                <ShoppingBag className="icon-large gray-icon" />
+                <p className="empty-text">Votre panier est vide</p>
+                <button onClick={onClose} className="btn-continue">
                   Continuer vos achats
                 </button>
               </div>
             ) : (
               <>
-                <div className="space-y-4 mb-8">
+                <div className="items-list">
                   {cartItems.map(item => (
-                    <div key={item.id} className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="text-white font-semibold">{item.name}</h3>
+                    <div key={item.id} className="cart-item">
+                      <div className="item-header">
+                        <h3 className="item-name">{item.name}</h3>
                         <button
                           onClick={() => onRemoveItem(item.id)}
-                          className="text-red-400 hover:text-red-300 transition-colors"
+                          className="remove-btn"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="icon-xs" />
                         </button>
                       </div>
-                      
-                      <p className="text-gray-400 text-sm mb-3">{item.description}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
+
+                      <p className="item-desc">{item.description}</p>
+
+                      <div className="item-footer">
+                        <div className="quantity-control">
                           <button
                             onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                            className="bg-gray-700 hover:bg-gray-600 text-white w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                            className="qty-btn minus-btn"
                           >
-                            <Minus className="w-4 h-4" />
+                            <Minus className="icon-xs" />
                           </button>
-                          <span className="text-white font-semibold w-8 text-center">
-                            {item.quantity}
-                          </span>
+                          <span className="qty-value">{item.quantity}</span>
                           <button
                             onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+                            className="qty-btn plus-btn"
                           >
-                            <Plus className="w-4 h-4" />
+                            <Plus className="icon-xs" />
                           </button>
                         </div>
-                        
-                        <span className="text-green-400 font-bold">
+
+                        <span className="item-price">
                           {(item.price * item.quantity).toFixed(2)}€
                         </span>
                       </div>
@@ -112,26 +105,26 @@ const Cart: React.FC<CartProps> = ({
                   ))}
                 </div>
 
-                <div className="border-t border-gray-700 pt-6 space-y-3">
-                  <div className="flex justify-between text-gray-300">
+                <div className="summary">
+                  <div className="summary-row">
                     <span>Sous-total</span>
                     <span>{subtotal.toFixed(2)}€</span>
                   </div>
-                  <div className="flex justify-between text-gray-300">
+                  <div className="summary-row">
                     <span>TVA (10%)</span>
                     <span>{tax.toFixed(2)}€</span>
                   </div>
-                  <div className="flex justify-between text-white text-xl font-bold border-t border-gray-700 pt-3">
+                  <div className="summary-row total-row">
                     <span>Total</span>
-                    <span className="text-green-400">{total.toFixed(2)}€</span>
+                    <span className="total-amount">{total.toFixed(2)}€</span>
                   </div>
                 </div>
 
                 <button
                   onClick={() => setShowCheckout(true)}
-                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center mt-6 transform hover:scale-105"
+                  className="btn-checkout"
                 >
-                  <CreditCard className="w-5 h-5 mr-2" />
+                  <CreditCard className="icon-xs mr-1" />
                   Passer Commande
                 </button>
               </>

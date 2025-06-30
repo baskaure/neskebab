@@ -1,6 +1,6 @@
 import React from 'react';
 import { Clock, MapPin, Phone, Star } from 'lucide-react';
-import './Hero.css';
+import './../style/Hero.css';
 
 const Hero: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
               </div>
               
               <h2 className="hero-title">
-                <span className="hero-title-gradient">Nes Kebab</span>
+                <span className="hero-title-gradient">Nes'Kebab</span>
                 <span className="hero-subtitle">Saveurs Authentiques</span>
               </h2>
             </div>
