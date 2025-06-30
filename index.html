@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebab de la Liberté - Condrieu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stripe-js/1.54.1/stripe.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">Nes'Kebab</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="cart-btn" onclick="toggleCart()">
+                🛒 Panier
+                <span class="cart-count" id="cart-count">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Nes'Kebab</h1>
+            <p class="hero-subtitle">Saveurs authentiques • Qualité premium • Livraison rapide</p>
+            <div class="hero-phone">04 82 62 93 86</div>
+            <div class="hero-address">694 20 Condrieu</div>
+            <a href="#menu" class="cta-button">
+                Découvrir le menu
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu-section">
+        <div class="container">
+            <h2 class="section-title">Notre Menu</h2>
+            <div class="menu-grid">
+                <!-- Sandwichs -->
+                <div class="menu-card">
+                    <h3 class="category-title">🥙 Sandwichs</h3>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Kebab Galette</div>
+                            <div class="item-description">Galette fraîche, viande grillée, crudités</div>
+                        </div>
+                        <div class="item-price">8,50€</div>
+                        <button class="add-btn" onclick="addToCart('Kebab Galette', 8.50)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Kebab Baguette</div>
+                            <div class="item-description">Pain baguette croustillant</div>
+                        </div>
+                        <div class="item-price">8,50€</div>
+                        <button class="add-btn" onclick="addToCart('Kebab Baguette', 8.50)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Tacos</div>
+                            <div class="item-description">Tortilla, viande, frites, sauce</div>
+                        </div>
+                        <div class="item-price">9,00€</div>
+                        <button class="add-btn" onclick="addToCart('Tacos', 9.00)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Hamburger</div>
+                            <div class="item-description">Pain burger, steak, crudités</div>
+                        </div>
+                        <div class="item-price">6,00€</div>
+                        <button class="add-btn" onclick="addToCart('Hamburger', 6.00)">+</button>
+                    </div>
+                </div>
+
+                <!-- Assiettes -->
+                <div class="menu-card">
+                    <h3 class="category-title">🍽️ Assiettes</h3>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Kebab Assiette</div>
+                            <div class="item-description">Viande, frites, salade, sauce</div>
+                        </div>
+                        <div class="item-price">13,00€</div>
+                        <button class="add-btn" onclick="addToCart('Kebab Assiette', 13.00)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Escalope</div>
+                            <div class="item-description">Escalope grillée, accompagnements</div>
+                        </div>
+                        <div class="item-price">12,50€</div>
+                        <button class="add-btn" onclick="addToCart('Escalope', 12.50)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Végétarienne</div>
+                            <div class="item-description">Légumes grillés, falafel</div>
+                        </div>
+                        <div class="item-price">8,00€</div>
+                        <button class="add-btn" onclick="addToCart('Végétarienne', 8.00)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Mixte</div>
+                            <div class="item-description">Viande + escalope, double portion</div>
+                        </div>
+                        <div class="item-price">17,00€</div>
+                        <button class="add-btn" onclick="addToCart('Mixte', 17.00)">+</button>
+                    </div>
+                </div>
+
+                <!-- Lahmacun -->
+                <div class="menu-card">
+                    <h3 class="category-title">🌯 Lahmacun</h3>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Avec Kebab</div>
+                            <div class="item-description">Pâte fine, viande hachée + kebab</div>
+                        </div>
+                        <div class="item-price">10,00€</div>
+                        <button class="add-btn" onclick="addToCart('Lahmacun avec Kebab', 10.00)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Sans Kebab</div>
+                            <div class="item-description">Pâte fine, viande hachée épicée</div>
+                        </div>
+                        <div class="item-price">6,00€</div>
+                        <button class="add-btn" onclick="addToCart('Lahmacun sans Kebab', 6.00)">+</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <div class="item-name">Menu 2 Lahmacun</div>
+                            <div class="item-description">2 Lahmacun + boisson</div>
+                        </div>
+                        <div class="item-price">13,00€</div>
+                        <button class="add-btn" onclick="addToCart('2 Lahmacun + Boisson', 13.00)">+</button>
+                    </div>
+                </div>
+
+                <!-- Accompagnements -->
+                <div class="menu-card">
+                    <h3 class="category-title">🍟 Accompagnements</h3>
+                <div class="menu-item">
+                    <div class="item-details">
+                        <div class="item-name">Frites</div>
+                        <div class="item-description">Frites croustillantes maison</div>
+                    </div>
+                    <div class="item-price">3,00€</div>
+                    <button class="add-btn" onclick="addToCart('Frites', 3.00)">+</button>
+                </div>
+                <div class="menu-item">
+                    <div class="item-details">
+                        <div class="item-name">Cheese Naan</div>
+                        <div class="item-description">Pain naan garni de fromage</div>
+                    </div>
+                    <div class="item-price">4,00€</div>
+                    <button class="add-btn" onclick="addToCart('Cheese Naan', 4.00)">+</button>
+                </div>
+            </div>
+
+            <!-- Boissons -->
+            <div class="menu-card">
+                <h3 class="category-title">🥤 Boissons</h3>
+                <div class="menu-item">
+                    <div class="item-details">
+                        <div class="item-name">Soda 33cl</div>
+                        <div class="item-description">Coca, Orangina, Ice Tea, Oasis...</div>
+                    </div>
+                    <div class="item-price">2,00€</div>
+                    <button class="add-btn" onclick="addToCart('Soda 33cl', 2.00)">+</button>
+                </div>
+                <div class="menu-item">
+                    <div class="item-details">
+                        <div class="item-name">Soda 50cl</div>
+                        <div class="item-description">Bouteille 50cl selon stock</div>
+                    </div>
+                    <div class="item-price">3,00€</div>
+                    <button class="add-btn" onclick="addToCart('Soda 50cl', 3.00)">+</button>
+                </div>
+                <div class="menu-item">
+                    <div class="item-details">
+                        <div class="item-name">Eau minérale</div>
+                        <div class="item-description">Bouteille d'eau 50cl</div>
+                    </div>
+                    <div class="item-price">1,50€</div>
+                    <button class="add-btn" onclick="addToCart('Eau minérale', 1.50)">+</button>
+                </div>
+            </div>
+
+        </div> <!-- end menu-grid -->
+    </div> <!-- end container -->
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <p>📍 69420 Condrieu</p>
+        <p>📞 04 82 62 93 86</p>
+        <p>🕒 Ouvert tous les jours de 11h à 23h</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 Nes'Kebab. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<!-- Cart Modal -->
+<div id="cart-modal" class="cart-modal" style="display:none;">
+    <div class="cart-content">
+        <h2>Votre panier</h2>
+        <ul id="cart-items"></ul>
+        <div class="cart-total">
+            Total : <span id="cart-total">0,00€</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">Valider la commande</button>
+        <button class="close-cart" onclick="toggleCart()">Fermer</button>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="scripts.js"></script>
+</body>
+</html>
